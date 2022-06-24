@@ -29,7 +29,7 @@
             <div class="hero-logo"><a href="#" class="logo w-inline-block"></a></div>
             <nav class="navigation">
                <a href="#about-sec" id="w-node-_75916034-1343-1531-b664-0355c84079aa-eb06f39e" class="navigation-item w-inline-block">
-                  <div>About</div>
+                  <div>about</div>
                </a>
                <a href="#feature-section-vision" class="navigation-item w-inline-block">
                   <div>Vision</div>
@@ -41,7 +41,7 @@
                   <div>Career Experience</div>
                </a>
                <a href="https://n4bdt.webflow.io/" target="_blank" class="navigation-item w-inline-block">
-                  <div>Related Activities</div>
+                  <div>Projects &amp; Related Activities</div>
                </a>
                <a href="#contact-formreal" class="navigation-item w-inline-block">
                   <div>Contact</div>
