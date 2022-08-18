@@ -1,0 +1,102 @@
+//* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+li {
+    display: inline-block;
+    width: auto;
+    height: 28px;
+    background: #ededed;
+    border-radius: 14px;
+    text-align: center;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+//* apply a natural box layout model to all elements, but allowing components to change */
+html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  body {
+    font-family: sans-serif;
+  }
+  
+  h2 {
+    font-size: 30px;
+    line-height: 1.2;
+    margin: 0;
+  }
+  li {
+      display: inline-block;
+      width: auto;
+      height: 28px;
+      background: #ededed;
+      border-radius: 14px;
+      text-align: center;
+      padding-left: 22px;
+      padding-right: 22px;
+  }
+
+  .container{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 940px;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 6px;
+    margin: 7px;
+    width: 270px;
+    height: 320px;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.025),0 0.2px 2px 0.5px rgba(0,0,0,.2)!important;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .visible{
+    display: inline-block !important;
+  }
+  .nonevisible{
+    display: none !important;
+  }
+
+  .selected{
+    color: white;
+    background-color: black;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.025),0 0.2px 7px 1.5px rgba(0,0,0,.2)!important;
+    background-color: rgba(233, 232, 232, 0.296);
+  }
+  .card-photo {
+    width: 100%;
+    max-height: 200px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  .card-title{
+    padding: 10px 15px 0 15px;
+  }
+  .card-body{
+    padding: 0 15px !important;
+  }
