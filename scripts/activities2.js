@@ -1,5 +1,8 @@
+
 $(document).ready(function(){
+  
   $('.widget-tab').click(function() {
+    alert("clicked");
     switchTabs($(this));
   });
 });

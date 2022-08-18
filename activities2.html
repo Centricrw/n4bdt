@@ -3,44 +3,106 @@
         <title>N4BDT Activities</title>
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <link href="./styles/activities2.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a5e6064f31.js" crossorigin="anonymous"></script>
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-        <link href="./styles/activities2.css" rel="stylesheet">
+        <script src="./scripts/jquery.js"></script>
+            
     </head>
     <body>
         <div class="container">
-            <ul class="activities-tabs">
-                <li class="widget-tab" data-tab="tab-one">All Countries</li>
-                <li class="widget-tab" data-tab="tab-two">Rwanda</li>
-                <li class="widget-tab" data-tab="tab-three">Egypt</li>
-                <li class="widget-tab" data-tab="tab-four">More</li>
-            </ul>
-            <div class="activities-content">
-                <div class="card">
-                    <img src="./img/image729.jpeg" class="card-photo" />
-                    <div class="card-title">
-                        <h6>This is the title</h6>
-                    </div>
-                    <div class="card-body">This is the content of the article it will be displaying nicely and clear  <a href="#">more...</a></div>
-                </div>
-                <div class="card">
-                    <img src="./img/image729.jpeg" class="card-photo" />
-                    <div class="card-title">
-                        <h6>This is the title</h6>
-                    </div>
-                    <div class="card-body">This is the content of the article it will be displaying nicely and clear  <a href="#">more...</a></div>
-                </div>
-                <div class="card">
-                    <img src="./img/image729.jpeg" class="card-photo" />
-                    <div class="card-title">
-                        <h6>This is the title</h6>
-                    </div>
-                    <div class="card-body">This is the content of the article it will be displaying nicely and clear  <a href="#">more...</a></div>
-                </div>
+            </br>
+            
+            <div id="countrylist">
+                <ul class="activities-tabs">
+                    <li class="widget-tab" data-tab="tab-one">All Countries</li>
+                    
+                    <li class="widget-tab" data-tab="tab-three">Egypt</li>
+                    <li class="widget-tab" data-tab="tab-four">More</li>
+                </ul>
             </div>
+            <div class="activities_content" id="activities_content">
+            </div>
+            <div id="more_activities"><a onclick="activities_cover(0)">more...</a></div>
         </div>
-        <script src="./scripts/jquery.js"></script>
-        <script src="./scripts/activities2.js"></script>
+        
+        <script>
+            (function countries() {
+                $.ajax({
+                    url: 'http://localhost:5000/api/countries',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (countries, status, xhr) {
+                        var results=[];
+                        var ul = $('<ul><li class="widget-tab selected" data-tab="tab-all">All Countries</li></ul>');
+                        for(var i = 0; i < 4; i++){
+                            var country = countries[i];
+                            ul.append('<li class="widget-tab" data-tab="tab-'+(country.code)+'">'+(country.name)+'</li>');
+                        }
+                        ul.append('<li class="widget-tab">more</li>');
+                        
+                        $("#countrylist").html(ul);
+                        activities_cover(0);
+                        $('.widget-tab').click(function() {
+                            switchTabs($(this));
+                        });
+                    },
+                    error: function(){
+                        alert('error');
+                    }
+                });
+            })();
+
+            // 
+            function switchTabs(that) {
+                var parent = that.parent();
+                var grandparent = parent.parent();
+                var showSegment = that.attr('data-tab');
+                
+                // remove selected class from tabs and add it to the current tab
+                parent.find('.selected').removeClass('selected');
+                that.addClass('selected');
+                if(showSegment == 'tab-all'){
+                    $('.card').removeClass('nonevisible').addClass('visible');
+                }else{
+                    // display selected segment
+                    $('#activities_content').find('.visible').removeClass('visible').addClass('nonevisible');
+                    $('#activities_content').find('[data-tab="' + showSegment + '"]').addClass('visible').removeClass('nonevisible');  
+                }
+            }// end switchTabs(that)
+            
+            function activities_cover(previous){
+                $.ajax({
+                    url: 'http://localhost:5000/api/activities_cover',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (activities_cover, status, xhr) {
+                        var allactivities = activities_cover.length
+                        var listedactivities = previous;
+                        var remainingactivities = allactivities - listedactivities;
+                        if(remainingactivities <3){ var nextactivities = listedactivities+remainingactivities; }
+                        else{ var nextactivities = listedactivities+3; }
+                        if(remainingactivities < 3){
+                            $('#more_activities').html('');
+                        }
+                        else{
+                            $('#more_activities').html('<a onclick="activities_cover('+nextactivities+')">'+remainingactivities+' more...</a>');
+                        }
+                        for(var i = listedactivities; i < nextactivities; i++){
+                            var activity_cover = activities_cover[i];
+                            $('#activities_content').append('<div class="card visible" data-tab="tab-'+(activity_cover.code)+'"> <img src="./img/image729.jpeg" class="card-photo" /> <div class="card-title"> <h6>'+activity_cover.title+'</h6> </div> <div class="card-body"><p>This is the content of the article it will be displaying nicely and clear  <a href="#">more...</a></p></div> </div>');
+                        }
+                    },
+                    error: function(){
+                        alert('error');
+                    }
+                })
+            };
+
+            
+            
+        </script>
     </body>
 
 </html>
